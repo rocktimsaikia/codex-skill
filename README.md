@@ -28,17 +28,14 @@ Configure your OpenAI API key.
 
 ## Supported Models
 
-| Model | Context | Speed | Best for |
-|-------|---------|-------|----------|
-| `gpt-5.5` | 400k | Standard | Most capable frontier model — deepest analysis, architecture, novel problems (use with `high`/`xhigh` reasoning) |
-| `gpt-5.4` | 1M (272k standard tier) | Standard, text+image | Default — capable enough for most reviews, faster than 5.5 |
-| `gpt-5.3-codex-spark` | 128k | ~1200 tok/s (Cerebras) | Quick fact checks, trivial queries |
-| `gpt-5.3-codex` | 272k | ~65 tok/s | General-purpose coding tasks |
-| `gpt-5.2-codex` | 272k | Standard | Older alternative |
-| `gpt-5.1-codex-max` | 272k | Standard | Older alternative |
-| `gpt-5.1-codex-mini` | 272k | Fast | Budget option |
+The 5.6 family is the current generation (ladder: `sol` > `terra` > `luna`). Reasoning-effort levels for 5.6 are `none`, `low`, `medium`, `high`, `xhigh`, `max`.
 
-> Note: for `gpt-5.4`, inputs beyond the 272k standard tier trigger a pricing surcharge (input cost doubles).
+| Model | Context | Price /1M (in/out) | Best for |
+|-------|---------|--------------------|----------|
+| `gpt-5.6-sol` | 1.05M (128k out) | $5 / $30 | Flagship — deepest analysis, architecture, long-horizon agentic work (use with `high`/`xhigh`/`max` reasoning). Bare `gpt-5.6` aliases here |
+| `gpt-5.6-terra` | 1.05M (128k out) | $2.50 / $15 | **Default** — most reviews and verification; ~GPT-5.5-flagship quality at roughly half the cost |
+| `gpt-5.6-luna` | 1.05M (128k out) | $1 / $6 | Fast and affordable — quick fact checks, trivial queries |
+| `gpt-5.5` | 400k | — | Prior frontier model, still selectable via `-m` |
 
 ## Installation
 
@@ -127,7 +124,7 @@ Or ask Claude:
 > "Can you verify this approach with Codex?"
 > "Get a second opinion on this architecture"
 
-The skill uses `gpt-5.4` by default — capable enough for most reviews and faster than the frontier model. For the hardest questions (novel architecture, deep analysis), it escalates to `gpt-5.5` with high reasoning effort. For trivial fact checks, it can drop to `gpt-5.3-codex-spark`.
+The skill uses `gpt-5.6-terra` by default — capable enough for most reviews and faster than the flagship. For the hardest questions (novel architecture, deep analysis), it escalates to `gpt-5.6-sol` with high reasoning effort. For trivial fact checks, it can drop to `gpt-5.6-luna`.
 
 ## Example Output
 
