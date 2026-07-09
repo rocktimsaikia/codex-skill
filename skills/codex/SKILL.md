@@ -51,20 +51,21 @@ codex exec --dangerously-bypass-approvals-and-sandbox "Your query here"
 - **Working directory**: Current project root
 
 ### Available Options (all optional)
-- `--model <model>` or `-m <model>`: Specify model (e.g., `gpt-5.5`, `gpt-5.4`, `gpt-5.3-codex`, `gpt-5.3-codex-spark`, `gpt-5.1-codex-mini`)
-- `-c model_reasoning_effort=<level>`: Set reasoning effort (`low`, `medium`, `high`, `xhigh`) — use config override, NOT `--reasoning-effort` (flag doesn't exist)
+- `--model <model>` or `-m <model>`: Specify model (e.g., `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-5.6-luna`, `gpt-5.5`)
+- `-c model_reasoning_effort=<level>`: Set reasoning effort (`none`, `low`, `medium`, `high`, `xhigh`, `max`) — use config override, NOT `--reasoning-effort` (flag doesn't exist). The `max` level is new with the 5.6 family.
 - `--full-auto`: Enable full auto mode
 
 ### Model Selection
-- **`gpt-5.5`** — newest frontier agentic coding model; 400k context window, supports reasoning levels low/medium/high/xhigh. Use for the deepest analysis, novel architecture, or the hardest problems. Slower than 5.4, so reserve for when reasoning depth matters more than latency.
-- **`gpt-5.4`** (default) — previous frontier model; 1M context window (272k standard-price tier), text+image input. Capable enough for most plan reviews and verification tasks, noticeably faster than 5.5. Use as the standard workhorse.
-- **`gpt-5.3-codex-spark`** — ultra-fast, ~1200 tok/s on Cerebras hardware (~15x faster than 5.3-codex); text-only, 128k context. Drop to this for trivial fact checks where speed dominates.
-- **`gpt-5.3-codex`** — full 5.3 model, ~65 tok/s; 272k context. Alternative general-purpose option.
-- Available alternatives: `gpt-5.2-codex`, `gpt-5.1-codex-max`, `gpt-5.1-codex-mini`
+The 5.6 family is the current generation. Capability ladder: **sol** (flagship) > **terra** (balanced) > **luna** (fast). All three share a 1.05M-token context window and 128k max output.
 
-**When to escalate to 5.5**: complex multi-file architecture analysis, novel algorithmic problems, security-critical review, or any case where 5.4 gives a shallow answer. Use `-m gpt-5.5 -c model_reasoning_effort=high` (or `xhigh` for maximum depth).
+- **`gpt-5.6-sol`** — flagship of the 5.6 family; maximum intelligence, tuned for complex reasoning and long-horizon agentic work. The bare `gpt-5.6` alias routes here. Slowest and priciest ($5 / $30 per 1M in/out). Use for the deepest analysis, novel architecture, or the hardest problems; pair with `-c model_reasoning_effort=high` (or `xhigh`/`max` for maximum depth).
+- **`gpt-5.6-terra`** (default) — balanced middle of the 5.6 family; OpenAI positions it as competitive with the prior GPT-5.5 flagship at roughly half the cost ($2.50 / $15 per 1M). Capable enough for most plan reviews and verification tasks, faster than sol. Use as the standard workhorse.
+- **`gpt-5.6-luna`** — fast and affordable tier ($1 / $6 per 1M), lowest cost of the three. Drop to this for trivial fact checks and quick lookups where speed and cost dominate over reasoning depth.
+- **`gpt-5.5`** — prior frontier model (400k context). Still selectable via `-m` if you want the previous generation's behavior.
 
-**When to drop to Spark**: trivial fact checks, quick lookups, or when you need sub-second answers and 5.4's depth is overkill.
+**When to escalate to sol**: complex multi-file architecture analysis, novel algorithmic problems, security-critical review, or any case where terra gives a shallow answer. Use `-m gpt-5.6-sol -c model_reasoning_effort=high` (or `xhigh`/`max` for maximum depth).
+
+**When to drop to luna**: trivial fact checks, quick lookups, or when you need fast, cheap answers and terra's depth is overkill.
 
 ### Performance Expectations
 **IMPORTANT**: Codex is designed for thoroughness over speed:
@@ -95,9 +96,9 @@ Note: Similar to how Codex looks for agent.md files, this project uses CLAUDE.md
 
 1. **Start Codex early**, then continue local analysis in parallel
 2. If timeout, retry with narrower scope and note the partial run
-3. For most reviews and verification, use the default (`gpt-5.4`)
-4. For architecture/novel questions, escalate with `-m gpt-5.5 -c model_reasoning_effort=high`
-5. For trivial fact checks where speed dominates, use `-m gpt-5.3-codex-spark`
+3. For most reviews and verification, use the default (`gpt-5.6-terra`)
+4. For architecture/novel questions, escalate with `-m gpt-5.6-sol -c model_reasoning_effort=high`
+5. For trivial fact checks where speed dominates, use `-m gpt-5.6-luna`
 6. Always quote path segments with metacharacters in shell examples
 
 ## Search-First Checklist
