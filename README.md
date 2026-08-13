@@ -42,7 +42,8 @@ The 5.6 family is the current generation (ladder: `sol` > `terra` > `luna`). Rea
 ### Option A: Install as Claude Code plugin (recommended)
 
 ```bash
-claude plugin add cathrynlavery/codex-skill
+claude plugin marketplace add cathrynlavery/codex-skill
+claude plugin install codex-skill@codex-skill
 ```
 
 This auto-registers both the `/codex` skill and the automatic plan review hook. No manual configuration needed.
